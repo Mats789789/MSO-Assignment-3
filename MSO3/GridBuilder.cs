@@ -18,7 +18,12 @@ namespace MSO3
         public static bool[,] BuildGrid(List<string> lines)
         {
             int height = lines.Count;
-            int width = lines.Max(l => l.Length);
+            int width;
+
+            if (height > 0) 
+                width = lines.Max(l => l.Length);
+            else 
+                width = 0;
 
             bool[,] grid = new bool[height, width];
 
