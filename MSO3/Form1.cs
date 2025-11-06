@@ -44,7 +44,12 @@ namespace MSO3
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            GridBuilder.DrawGrid(GridBuilder.GetGridFromTxt("/Users/Matse/Desktop/TestGrid.txt"), e);
+            bool[,] grid = GridBuilder.GetGridFromTxt("/Users/Matse/Desktop/TestGrid.txt");
+
+            if (grid.Length > 0)
+                GridBuilder.DrawGrid(grid, e);
+            else
+                throw new NotImplementedException(); // MAAAAAAAAAAAAAAAAAAAAAAAAAATS
         }
     }
 }
