@@ -50,6 +50,7 @@ public class RepeatCommand : ICommand
 {
     List<ICommand> commands;
     int timesExecuted;
+    string logs = "";
 
     public RepeatCommand(int timesExecuted, List<ICommand> commands)
     {
@@ -59,6 +60,8 @@ public class RepeatCommand : ICommand
 
     public void Execute(Character character)
     {
+        string logsLocal = "";
+
         for (int j = 0; j < timesExecuted; j++)
         {
             bool invalidMoveMade = false;
@@ -66,7 +69,7 @@ public class RepeatCommand : ICommand
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i].Execute(character);
-                logs += commands[i].LogExecute();
+                logsLocal += commands[i].LogExecute();
 
                 if (character.OffGrid || character.OnBlockedTile) //check invalid position
                 {
@@ -77,6 +80,8 @@ public class RepeatCommand : ICommand
 
             if (invalidMoveMade) break;
         }
+
+        logs = logsLocal;
     }
 
     public string LogExecute()
@@ -106,6 +111,7 @@ public class RepeatUntilCommand : ICommand
     public void Execute(Character character)
     {
         bool keepRunning = true;
+        string logsLocal = "";
 
         while (keepRunning)
         {
@@ -114,7 +120,7 @@ public class RepeatUntilCommand : ICommand
                 if (!condition(character, commands[i]) && !character.OffGrid && !character.OnBlockedTile) //check if command is valid
                 {
                     commands[i].Execute(character);
-                    logs += commands[i].LogExecute();
+                    logsLocal += commands[i].LogExecute();
                 }
                 else
                 {
@@ -123,6 +129,7 @@ public class RepeatUntilCommand : ICommand
                 }
             }
         }
+        logs = logsLocal;
     }
 
     public string LogExecute()
