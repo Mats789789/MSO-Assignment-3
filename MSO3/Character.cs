@@ -47,6 +47,12 @@ public class Character
             default: break;
         }
     }
+
+    public void Reset()
+    {
+        this.direction = Direction.North;
+        this.position = new Point(0, 0);
+    }
 }
 
 public enum Direction { North, East, South, West}

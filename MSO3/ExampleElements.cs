@@ -16,7 +16,6 @@ namespace MSO3
         //Example grids
         public static readonly Tile[,] threeBythree = GridBuilder.BuildGrid(["ooo", "ooo", "ooo"]);
         public static readonly Tile[,] fiveByfive = GridBuilder.BuildGrid
-            (["++ooo", "+oooo", "ooooo", "oooo+", "ooo++"]);
-
+            (["ooo++", "+oooo", "ooooo", "oooo+", "ooo++"]);
     }
 }
