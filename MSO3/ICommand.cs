@@ -50,7 +50,7 @@ public class RepeatCommand : ICommand
 {
     List<ICommand> commands;
     int timesExecuted;
-    string logs = "";
+    string logs;
 
     public RepeatCommand(int timesExecuted, List<ICommand> commands)
     {
@@ -80,7 +80,6 @@ public class RepeatCommand : ICommand
 
             if (invalidMoveMade) break;
         }
-
         logs = logsLocal;
     }
 

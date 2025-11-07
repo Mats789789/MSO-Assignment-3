@@ -40,12 +40,13 @@
             x5ToolStripMenuItem = new ToolStripMenuItem();
             fromFileToolStripMenuItemGrid = new ToolStripMenuItem();
             filePathGridInput = new ToolStripTextBox();
-            InputTextBox = new TextBox();
+            inputTextBox = new TextBox();
             run_button = new Button();
             programViewPanel = new Panel();
-            OutPutTextBox = new TextBox();
-            WarningBox = new TextBox();
+            outPutTextBox = new TextBox();
+            warningTextBox = new TextBox();
             metrics_button = new Button();
+            reset_button = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -133,14 +134,14 @@
             filePathGridInput.Size = new Size(100, 23);
             filePathGridInput.KeyDown += filePathGridInputBox_KeyDown;
             // 
-            // InputTextBox
+            // inputTextBox
             // 
-            InputTextBox.Location = new System.Drawing.Point(12, 89);
-            InputTextBox.Multiline = true;
-            InputTextBox.Name = "InputTextBox";
-            InputTextBox.Size = new Size(419, 551);
-            InputTextBox.TabIndex = 1;
-            InputTextBox.TextChanged += inputTextBox_TextChanged;
+            inputTextBox.Location = new System.Drawing.Point(12, 89);
+            inputTextBox.Multiline = true;
+            inputTextBox.Name = "inputTextBox";
+            inputTextBox.Size = new Size(419, 551);
+            inputTextBox.TabIndex = 1;
+            inputTextBox.TextChanged += inputTextBox_TextChanged;
             // 
             // run_button
             // 
@@ -160,21 +161,22 @@
             programViewPanel.TabIndex = 3;
             programViewPanel.Paint += programViewPanel_Paint;
             // 
-            // OutPutTextBox
+            // outPutTextBox
             // 
-            OutPutTextBox.Location = new System.Drawing.Point(500, 517);
-            OutPutTextBox.Multiline = true;
-            OutPutTextBox.Name = "OutPutTextBox";
-            OutPutTextBox.ReadOnly = true;
-            OutPutTextBox.Size = new Size(672, 152);
-            OutPutTextBox.TabIndex = 4;
+            outPutTextBox.Location = new System.Drawing.Point(500, 517);
+            outPutTextBox.Multiline = true;
+            outPutTextBox.Name = "outPutTextBox";
+            outPutTextBox.ReadOnly = true;
+            outPutTextBox.Size = new Size(672, 152);
+            outPutTextBox.TabIndex = 4;
             // 
-            // WarningBox
+            // warningTextBox
             // 
-            WarningBox.Location = new System.Drawing.Point(12, 646);
-            WarningBox.Name = "WarningBox";
-            WarningBox.Size = new Size(419, 23);
-            WarningBox.TabIndex = 5;
+            warningTextBox.Location = new System.Drawing.Point(12, 646);
+            warningTextBox.Name = "warningTextBox";
+            warningTextBox.ReadOnly = true;
+            warningTextBox.Size = new Size(419, 23);
+            warningTextBox.TabIndex = 5;
             // 
             // metrics_button
             // 
@@ -186,17 +188,28 @@
             metrics_button.UseVisualStyleBackColor = true;
             metrics_button.Click += metrics_button_Click;
             // 
+            // reset_button
+            // 
+            reset_button.Location = new System.Drawing.Point(46, 54);
+            reset_button.Name = "reset_button";
+            reset_button.Size = new Size(75, 23);
+            reset_button.TabIndex = 7;
+            reset_button.Text = "Reset";
+            reset_button.UseVisualStyleBackColor = true;
+            reset_button.Click += reset_button_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 681);
+            Controls.Add(reset_button);
             Controls.Add(metrics_button);
-            Controls.Add(WarningBox);
-            Controls.Add(OutPutTextBox);
+            Controls.Add(warningTextBox);
+            Controls.Add(outPutTextBox);
             Controls.Add(programViewPanel);
             Controls.Add(run_button);
-            Controls.Add(InputTextBox);
+            Controls.Add(inputTextBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
@@ -223,11 +236,12 @@
         private ToolStripMenuItem fromFileToolStripMenuItemProgram;
         private ToolStripTextBox filePathProgramInput;
         private ToolStripTextBox filePathGridInput;
+        private Button metrics_button;
 
         public Panel programViewPanel;
-        public TextBox InputTextBox;
-        public TextBox OutPutTextBox;
-        public TextBox WarningBox;
-        private Button metrics_button;
+        public TextBox inputTextBox;
+        public TextBox outPutTextBox;
+        public TextBox warningTextBox;
+        private Button reset_button;
     }
 }

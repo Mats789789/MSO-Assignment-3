@@ -4,9 +4,12 @@ namespace MSO3
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        private readonly IProgramController program;
+
+        public Form1(IProgramController programController)
         {
             InitializeComponent();
+            this.program = programController;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -21,27 +24,32 @@ namespace MSO3
 
         private void runProgramButton_Click(object sender, EventArgs e)
         {
-            Program.RunCurrentProgram(false);
+            program.RunProgram(false);
         }
 
         private void metrics_button_Click(object sender, EventArgs e)
         {
-            Program.RunCurrentProgram(true);
+            program.RunProgram(true);
+        }
+
+        private void reset_button_Click(object sender, EventArgs e)
+        {
+            program.Reset(programViewPanel);
         }
 
         private void basicToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputTextBox.Text = ExampleElements.basicProgram;
+            inputTextBox.Text = ExampleElements.basicProgram;
         }
 
         private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputTextBox.Text = ExampleElements.advancedProgram;
+            inputTextBox.Text = ExampleElements.advancedProgram;
         }
 
         private void expertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputTextBox.Text = expertToolStripMenuItem.Text;
+            inputTextBox.Text = expertToolStripMenuItem.Text;
         }
 
         private void filePathProgramInputBox_KeyDown(object sender, KeyEventArgs e)
@@ -52,19 +60,19 @@ namespace MSO3
                 string filePath = ((ToolStripTextBox)sender).Text;
                 if (File.Exists(filePath))
                 {
-                    InputTextBox.Text = File.ReadAllText(filePath);
+                    inputTextBox.Text = File.ReadAllText(filePath);
                 }
             }
         }
 
         private void x3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.LoadGrid(ExampleElements.threeBythree, programViewPanel);
+            program.LoadGrid(ExampleElements.threeBythree, programViewPanel);
         }
 
         private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.LoadGrid(ExampleElements.fiveByfive, programViewPanel);
+            program.LoadGrid(ExampleElements.fiveByfive, programViewPanel);
         }
 
         private void filePathGridInputBox_KeyDown(object sender, KeyEventArgs e)
@@ -73,18 +81,16 @@ namespace MSO3
             {
                 e.SuppressKeyPress = true;
                 string filePath = ((ToolStripTextBox)sender).Text;
-                Program.LoadGrid(GridBuilder.GetGridFromTxt(filePath), programViewPanel);
+                program.LoadGrid(program.GridBuilder.GetGridFromTxt(filePath), programViewPanel);
             }
         }
 
         private void programViewPanel_Paint(object sender, PaintEventArgs e)
         {
-            Tile[,]? grid = Program.currentGrid;
+            Tile[,]? grid = Program.programGrid;
 
             if (grid?.Length > 0)
-            {
-                GridBuilder.DrawGrid(grid, e);
-            }     
+                GridBuilder.DrawGrid(grid, e, program.Character.Position);
         }
     }
 }

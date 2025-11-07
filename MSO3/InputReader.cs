@@ -3,12 +3,19 @@ using MSO3;
 
 internal class InputReader
 {
+    IProgramController program;
+
+    public InputReader(IProgramController program)
+    {
+        this.program = program;
+    }
+
     public static List<string> GetLinesTxt(string input)
     {
         return input.Split(new[] {"\n", "\r\n", "\r"}, StringSplitOptions.None).ToList();
     }
 
-    private static List<ICommand> ParseCommands(List<string> lines)
+    private List<ICommand> ParseCommands(List<string> lines)
     {
         List<ICommand> commands = new List<ICommand>();
         int line = 0;
@@ -43,13 +50,13 @@ internal class InputReader
                     case "Move": 
                         {
                             if (int.TryParse(cut[1], out int parsed)) commands.Add(new MoveCommand(parsed));
-                            else Program.WarnUser("move parameter must be an integer");
+                            else program.WarnUser("move parameter must be an integer");
                             break;
                         } 
                     case "Turn":
                         {
                             if(cut[1] == "left" || cut[1] == "right") commands.Add(new TurnCommand(cut[1]));
-                            else Program.WarnUser("turn parameter must be an left or right");
+                            else program.WarnUser("turn parameter must be an left or right");
                             break;
                         }
                     case "": break;
@@ -62,7 +69,7 @@ internal class InputReader
         return commands;
     }
 
-    public static List<ICommand> GetCommands(string input)
+    public List<ICommand> GetCommands(string input)
     {
         return ParseCommands(GetLinesTxt(input));
     }

@@ -36,6 +36,7 @@ public class Character
             case Direction.South: position.Y += distance; break;
             case Direction.West: position.X -= distance; break;
         }
+        Debug.WriteLine(position.X + " " + position.Y);
     }
 
     public void Turn(string direction)
