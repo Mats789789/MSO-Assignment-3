@@ -60,7 +60,7 @@ internal class InputReader
                             break;
                         }
                     case "": break;
-                    default: Program.WarnUser($"invalid command called"); break;
+                    default: program.WarnUser($"invalid command called"); break;
                 }
                 line++;
             }

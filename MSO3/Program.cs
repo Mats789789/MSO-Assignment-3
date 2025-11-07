@@ -31,10 +31,10 @@ namespace MSO3
 
         public void RunProgram(bool printMetrics)
         {
-            character.Reset(); //
-            form.WarningBox.Text = "";
+            Character.Reset(); //
+            form.warningTextBox.Text = "";
 
-            if (currentGrid == null)
+            if (Character.grid == null)
             {
                 WarnUser("cannot run program without valid grid");
                 return;
@@ -48,7 +48,7 @@ namespace MSO3
                 commands[i].Execute(Character);
                 log += commands[i].LogExecute();
 
-                if (character.OffGrid || character.OnBlockedTile) // check if invalid move was made
+                if (Character.OffGrid || Character.OnBlockedTile) // check if invalid move was made
                 {
                     WarnUser("character went to invalid square");
                     break;
