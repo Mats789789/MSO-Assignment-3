@@ -41,10 +41,11 @@
             fromFileToolStripMenuItemGrid = new ToolStripMenuItem();
             filePathGridInput = new ToolStripTextBox();
             InputTextBox = new TextBox();
-            RunButton = new Button();
+            run_button = new Button();
             programViewPanel = new Panel();
             OutPutTextBox = new TextBox();
             WarningBox = new TextBox();
+            metrics_button = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -141,15 +142,15 @@
             InputTextBox.TabIndex = 1;
             InputTextBox.TextChanged += inputTextBox_TextChanged;
             // 
-            // RunButton
+            // run_button
             // 
-            RunButton.Location = new System.Drawing.Point(127, 48);
-            RunButton.Name = "RunButton";
-            RunButton.Size = new Size(173, 35);
-            RunButton.TabIndex = 2;
-            RunButton.Text = "Run Program";
-            RunButton.UseVisualStyleBackColor = true;
-            RunButton.Click += runProgramButton_Click;
+            run_button.Location = new System.Drawing.Point(127, 48);
+            run_button.Name = "run_button";
+            run_button.Size = new Size(173, 35);
+            run_button.TabIndex = 2;
+            run_button.Text = "Run Program";
+            run_button.UseVisualStyleBackColor = true;
+            run_button.Click += runProgramButton_Click;
             // 
             // programViewPanel
             // 
@@ -175,15 +176,26 @@
             WarningBox.Size = new Size(419, 23);
             WarningBox.TabIndex = 5;
             // 
+            // metrics_button
+            // 
+            metrics_button.Location = new System.Drawing.Point(306, 54);
+            metrics_button.Name = "metrics_button";
+            metrics_button.Size = new Size(75, 23);
+            metrics_button.TabIndex = 6;
+            metrics_button.Text = "Metrics";
+            metrics_button.UseVisualStyleBackColor = true;
+            metrics_button.Click += metrics_button_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 681);
+            Controls.Add(metrics_button);
             Controls.Add(WarningBox);
             Controls.Add(OutPutTextBox);
             Controls.Add(programViewPanel);
-            Controls.Add(RunButton);
+            Controls.Add(run_button);
             Controls.Add(InputTextBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -203,18 +215,19 @@
         private ToolStripMenuItem basicToolStripMenuItem;
         private ToolStripMenuItem advancedToolStripMenuItem;
         private ToolStripMenuItem expertToolStripMenuItem;
-        private Button RunButton;
+        private Button run_button;
         private ToolStripMenuItem loadGridToolStripMenuItem;
         private ToolStripMenuItem x3ToolStripMenuItem;
         private ToolStripMenuItem x5ToolStripMenuItem;
         private ToolStripMenuItem fromFileToolStripMenuItemGrid;
         private ToolStripMenuItem fromFileToolStripMenuItemProgram;
-        private Panel programViewPanel;
         private ToolStripTextBox filePathProgramInput;
         private ToolStripTextBox filePathGridInput;
 
+        public Panel programViewPanel;
         public TextBox InputTextBox;
         public TextBox OutPutTextBox;
         public TextBox WarningBox;
+        private Button metrics_button;
     }
 }
