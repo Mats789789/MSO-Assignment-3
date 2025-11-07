@@ -31,11 +31,12 @@ public class Character
     {
         switch (direction)
         {
-            case Direction.North: position.Y += distance; break;
+            case Direction.North: position.Y -= distance; break;
             case Direction.East: position.X += distance; break;
-            case Direction.South: position.Y -= distance; break;
+            case Direction.South: position.Y += distance; break;
             case Direction.West: position.X -= distance; break;
         }
+        Debug.WriteLine(position.X + " " + position.Y);
     }
 
     public void Turn(string direction)

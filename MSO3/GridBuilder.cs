@@ -1,9 +1,16 @@
 ﻿
 namespace MSO3
 {
-    internal class GridBuilder
+    public class GridBuilder
     {
-        public static Tile[,] GetGridFromTxt(string path)
+        IProgramController program;
+
+        public GridBuilder(IProgramController program)
+        {
+            this.program = program;
+        }
+
+        public Tile[,] GetGridFromTxt(string path)
         {
             if (File.Exists(path))
             {
@@ -12,8 +19,8 @@ namespace MSO3
             }
             else
             {
-                Program.WarnUser("file path could not be found");
-                return Program.currentGrid;
+                program.WarnUser("file path could not be found");
+                return Program.programGrid;
             }
         }
 
@@ -50,7 +57,7 @@ namespace MSO3
             return grid;
         }
 
-        public static void DrawGrid(Tile[,] grid, PaintEventArgs e)
+        public static void DrawGrid(Tile[,] grid, PaintEventArgs e, Point characterPos)
         {
             Graphics g = e.Graphics;
 
@@ -59,8 +66,6 @@ namespace MSO3
             int cellSize = 250 / int.Max(height, width);
             int offsetX = (e.ClipRectangle.Width - width * cellSize) / 2;
             int offsetY = (e.ClipRectangle.Height - height * cellSize) / 2;
-
-            Point characterPos = Program.character.Position;
 
             for (int row = 0; row < height; row++)
             {
