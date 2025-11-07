@@ -33,14 +33,17 @@
             basicToolStripMenuItem = new ToolStripMenuItem();
             advancedToolStripMenuItem = new ToolStripMenuItem();
             expertToolStripMenuItem = new ToolStripMenuItem();
-            fromFileToolStripMenuItem1 = new ToolStripMenuItem();
+            fromFileToolStripMenuItemProgram = new ToolStripMenuItem();
+            filePathProgramInput = new ToolStripTextBox();
             loadGridToolStripMenuItem = new ToolStripMenuItem();
             x3ToolStripMenuItem = new ToolStripMenuItem();
             x5ToolStripMenuItem = new ToolStripMenuItem();
-            fromFileToolStripMenuItem = new ToolStripMenuItem();
+            fromFileToolStripMenuItemGrid = new ToolStripMenuItem();
+            filePathGridInput = new ToolStripTextBox();
             InputTextBox = new TextBox();
             RunButton = new Button();
             programViewPanel = new Panel();
+            OutPutTextBox = new TextBox();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,7 +58,7 @@
             // 
             // loadProgramToolStripMenuItem
             // 
-            loadProgramToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { basicToolStripMenuItem, advancedToolStripMenuItem, expertToolStripMenuItem, fromFileToolStripMenuItem1 });
+            loadProgramToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { basicToolStripMenuItem, advancedToolStripMenuItem, expertToolStripMenuItem, fromFileToolStripMenuItemProgram });
             loadProgramToolStripMenuItem.Name = "loadProgramToolStripMenuItem";
             loadProgramToolStripMenuItem.Size = new Size(91, 20);
             loadProgramToolStripMenuItem.Text = "LoadProgram";
@@ -63,34 +66,40 @@
             // basicToolStripMenuItem
             // 
             basicToolStripMenuItem.Name = "basicToolStripMenuItem";
-            basicToolStripMenuItem.Size = new Size(127, 22);
+            basicToolStripMenuItem.Size = new Size(145, 22);
             basicToolStripMenuItem.Text = "Basic";
             basicToolStripMenuItem.Click += basicToolStripMenuItem_Click;
             // 
             // advancedToolStripMenuItem
             // 
             advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
-            advancedToolStripMenuItem.Size = new Size(127, 22);
+            advancedToolStripMenuItem.Size = new Size(145, 22);
             advancedToolStripMenuItem.Text = "Advanced";
             advancedToolStripMenuItem.Click += advancedToolStripMenuItem_Click;
             // 
             // expertToolStripMenuItem
             // 
             expertToolStripMenuItem.Name = "expertToolStripMenuItem";
-            expertToolStripMenuItem.Size = new Size(127, 22);
+            expertToolStripMenuItem.Size = new Size(145, 22);
             expertToolStripMenuItem.Text = "Expert";
             expertToolStripMenuItem.Click += expertToolStripMenuItem_Click;
             // 
-            // fromFileToolStripMenuItem1
+            // fromFileToolStripMenuItemProgram
             // 
-            fromFileToolStripMenuItem1.Name = "fromFileToolStripMenuItem1";
-            fromFileToolStripMenuItem1.Size = new Size(127, 22);
-            fromFileToolStripMenuItem1.Text = "From file";
-            fromFileToolStripMenuItem1.Click += fromFileToolStripMenuItem1_Click;
+            fromFileToolStripMenuItemProgram.DropDownItems.AddRange(new ToolStripItem[] { filePathProgramInput });
+            fromFileToolStripMenuItemProgram.Name = "fromFileToolStripMenuItemProgram";
+            fromFileToolStripMenuItemProgram.Size = new Size(145, 22);
+            fromFileToolStripMenuItemProgram.Text = "From filepath";
+            // 
+            // filePathProgramInput
+            // 
+            filePathProgramInput.Name = "filePathProgramInput";
+            filePathProgramInput.Size = new Size(200, 23);
+            filePathProgramInput.KeyDown += filePathProgramInputBox_KeyDown;
             // 
             // loadGridToolStripMenuItem
             // 
-            loadGridToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { x3ToolStripMenuItem, x5ToolStripMenuItem, fromFileToolStripMenuItem });
+            loadGridToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { x3ToolStripMenuItem, x5ToolStripMenuItem, fromFileToolStripMenuItemGrid });
             loadGridToolStripMenuItem.Name = "loadGridToolStripMenuItem";
             loadGridToolStripMenuItem.Size = new Size(67, 20);
             loadGridToolStripMenuItem.Text = "LoadGrid";
@@ -98,22 +107,29 @@
             // x3ToolStripMenuItem
             // 
             x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            x3ToolStripMenuItem.Size = new Size(180, 22);
+            x3ToolStripMenuItem.Size = new Size(145, 22);
             x3ToolStripMenuItem.Text = "3x3";
             x3ToolStripMenuItem.Click += x3ToolStripMenuItem_Click;
             // 
             // x5ToolStripMenuItem
             // 
             x5ToolStripMenuItem.Name = "x5ToolStripMenuItem";
-            x5ToolStripMenuItem.Size = new Size(180, 22);
+            x5ToolStripMenuItem.Size = new Size(145, 22);
             x5ToolStripMenuItem.Text = "5x5";
             x5ToolStripMenuItem.Click += x5ToolStripMenuItem_Click;
             // 
-            // fromFileToolStripMenuItem
+            // fromFileToolStripMenuItemGrid
             // 
-            fromFileToolStripMenuItem.Name = "fromFileToolStripMenuItem";
-            fromFileToolStripMenuItem.Size = new Size(180, 22);
-            fromFileToolStripMenuItem.Text = "From file";
+            fromFileToolStripMenuItemGrid.DropDownItems.AddRange(new ToolStripItem[] { filePathGridInput });
+            fromFileToolStripMenuItemGrid.Name = "fromFileToolStripMenuItemGrid";
+            fromFileToolStripMenuItemGrid.Size = new Size(145, 22);
+            fromFileToolStripMenuItemGrid.Text = "From filepath";
+            // 
+            // filePathGridInput
+            // 
+            filePathGridInput.Name = "filePathGridInput";
+            filePathGridInput.Size = new Size(100, 23);
+            filePathGridInput.KeyDown += filePathGridInputBox_KeyDown;
             // 
             // InputTextBox
             // 
@@ -142,11 +158,21 @@
             programViewPanel.TabIndex = 3;
             programViewPanel.Paint += programViewPanel_Paint;
             // 
+            // OutPutTextBox
+            // 
+            OutPutTextBox.Location = new System.Drawing.Point(500, 517);
+            OutPutTextBox.Multiline = true;
+            OutPutTextBox.Name = "OutPutTextBox";
+            OutPutTextBox.ReadOnly = true;
+            OutPutTextBox.Size = new Size(672, 152);
+            OutPutTextBox.TabIndex = 4;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 681);
+            Controls.Add(OutPutTextBox);
             Controls.Add(programViewPanel);
             Controls.Add(RunButton);
             Controls.Add(InputTextBox);
@@ -168,13 +194,17 @@
         private ToolStripMenuItem basicToolStripMenuItem;
         private ToolStripMenuItem advancedToolStripMenuItem;
         private ToolStripMenuItem expertToolStripMenuItem;
-        public TextBox InputTextBox;
         private Button RunButton;
         private ToolStripMenuItem loadGridToolStripMenuItem;
         private ToolStripMenuItem x3ToolStripMenuItem;
         private ToolStripMenuItem x5ToolStripMenuItem;
-        private ToolStripMenuItem fromFileToolStripMenuItem;
-        private ToolStripMenuItem fromFileToolStripMenuItem1;
+        private ToolStripMenuItem fromFileToolStripMenuItemGrid;
+        private ToolStripMenuItem fromFileToolStripMenuItemProgram;
         private Panel programViewPanel;
+        private ToolStripTextBox filePathProgramInput;
+        private ToolStripTextBox filePathGridInput;
+
+        public TextBox InputTextBox;
+        public TextBox OutPutTextBox;
     }
 }

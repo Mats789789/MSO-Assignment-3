@@ -1,9 +1,11 @@
 ﻿
+using MSO3;
+
 internal class InputReader
 {
     private static List<string> GetLinesTxt(string input)
     {
-        return input.Split('\n').ToList();
+        return input.Split(new[] {"\n", "\r\n", "\r"}, StringSplitOptions.None).ToList();
     }
 
     private static List<ICommand> ParseCommands(List<string> lines)
@@ -41,7 +43,7 @@ internal class InputReader
                     case "Move": commands.Add(new MoveCommand(cut[1])); break;
                     case "Turn": commands.Add(new TurnCommand(cut[1])); break;
 
-                    default: throw new NotImplementedException();
+                    default: Program.WarnUser($"invalid syntax"); break;
                 }
                 line++;
             }

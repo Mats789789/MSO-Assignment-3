@@ -17,7 +17,11 @@ namespace MSO3
 
         public static void RunCurrentProgram()
         {
-            if (currentGrid == null) throw new NotImplementedException(); //Replace with output warning and return
+            if (currentGrid == null)
+            {
+                WarnUser("cannot run program without valid grid");
+                return;
+            }
 
             commands = InputReader.GetCommands(form.InputTextBox.Text);
 
@@ -27,6 +31,10 @@ namespace MSO3
             }
 
             commands.Clear();
+        }
+        public static void WarnUser(string warning)
+        {
+            form.OutPutTextBox.Text = "Warning: " + warning;
         }
 
         public static void LoadGrid(Tile[,] grid, Panel gridPanel)
