@@ -74,7 +74,7 @@ namespace MSO3
 
         private void programViewPanel_Paint(object sender, PaintEventArgs e)
         {
-            bool[,]? grid = Program.currentGrid;
+            Tile[,]? grid = Program.currentGrid;
 
             if (grid?.Length > 0)
                 GridBuilder.DrawGrid(grid, e);

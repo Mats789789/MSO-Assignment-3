@@ -5,7 +5,7 @@ namespace MSO3
         static Form1 form;
         static Character character = new Character();
         static List<ICommand> commands = new List<ICommand>();
-        public static bool[,]? currentGrid;
+        public static Tile[,]? currentGrid;
 
         [STAThread]
         static void Main()
@@ -37,9 +37,10 @@ namespace MSO3
             form.OutPutTextBox.Text = "Warning: " + warning;
         }
 
-        public static void LoadGrid(bool[,] grid, Panel gridPanel)
+        public static void LoadGrid(Tile[,] grid, Panel gridPanel)
         {
             currentGrid = grid;
+            character.grid = grid; // set characters grid to the current grid
             gridPanel.Refresh();
         }
     }

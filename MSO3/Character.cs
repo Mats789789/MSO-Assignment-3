@@ -8,6 +8,23 @@ public class Character
     public Point Position => position;
     Direction direction;
     public Direction Direction => direction;
+    public Tile[,]? grid;
+
+    public bool OnWall => grid != null && grid[position.X, position.Y] == Tile.Blocked;
+    public bool OnEdge =>
+    grid != null &&
+    position.X >= 0 && position.Y >= 0 &&
+    position.X < grid.GetLength(0) &&
+    position.Y < grid.GetLength(1);
+
+    public Character(Character other)
+    {
+        this.position = other.position;
+        this.direction = other.direction;
+        this.grid = other.grid;
+    }
+
+    public Character() { }
 
     public void Move(int distance)
     {
@@ -32,6 +49,7 @@ public class Character
 }
 
 public enum Direction { North, East, South, West}
+public enum Tile { Open, Blocked, EndState }
 public struct Point
 {
     public int X;
