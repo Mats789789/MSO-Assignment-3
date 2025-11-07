@@ -98,19 +98,21 @@
             // x3ToolStripMenuItem
             // 
             x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            x3ToolStripMenuItem.Size = new Size(121, 22);
+            x3ToolStripMenuItem.Size = new Size(180, 22);
             x3ToolStripMenuItem.Text = "3x3";
+            x3ToolStripMenuItem.Click += x3ToolStripMenuItem_Click;
             // 
             // x5ToolStripMenuItem
             // 
             x5ToolStripMenuItem.Name = "x5ToolStripMenuItem";
-            x5ToolStripMenuItem.Size = new Size(121, 22);
+            x5ToolStripMenuItem.Size = new Size(180, 22);
             x5ToolStripMenuItem.Text = "5x5";
+            x5ToolStripMenuItem.Click += x5ToolStripMenuItem_Click;
             // 
             // fromFileToolStripMenuItem
             // 
             fromFileToolStripMenuItem.Name = "fromFileToolStripMenuItem";
-            fromFileToolStripMenuItem.Size = new Size(121, 22);
+            fromFileToolStripMenuItem.Size = new Size(180, 22);
             fromFileToolStripMenuItem.Text = "From file";
             // 
             // InputTextBox
@@ -132,13 +134,13 @@
             RunButton.UseVisualStyleBackColor = true;
             RunButton.Click += runProgramButton_Click;
             // 
-            // panel1
+            // programViewPanel
             // 
             programViewPanel.Location = new System.Drawing.Point(500, 89);
-            programViewPanel.Name = "panel1";
+            programViewPanel.Name = "programViewPanel";
             programViewPanel.Size = new Size(672, 400);
             programViewPanel.TabIndex = 3;
-            programViewPanel.Paint += panel1_Paint;
+            programViewPanel.Paint += programViewPanel_Paint;
             // 
             // Form1
             // 

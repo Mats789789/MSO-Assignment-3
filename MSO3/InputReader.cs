@@ -1,5 +1,4 @@
-﻿using static System.Windows.Forms.LinkLabel;
-
+﻿
 internal class InputReader
 {
     private static List<string> GetLinesTxt(string input)
@@ -35,7 +34,6 @@ internal class InputReader
             }
             else
             {
-
                 string[] cut = lines[line].Split(' ');
 
                 switch (cut[0])
@@ -45,6 +43,7 @@ internal class InputReader
 
                     default: throw new NotImplementedException();
                 }
+                line++;
             }
         }
 
@@ -53,7 +52,6 @@ internal class InputReader
 
     public static List<ICommand> GetCommands(string input)
     {
-        return ParseCommands
-              (GetLinesTxt(input));
+        return ParseCommands(GetLinesTxt(input));
     }
 }

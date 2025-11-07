@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace MSO3
 {
     public partial class Form1 : Form
@@ -24,7 +26,7 @@ namespace MSO3
 
         private void basicToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputTextBox.Text = basicToolStripMenuItem.Text;
+            InputTextBox.Text = ExampleElements.basicProgram;
         }
 
         private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,14 +44,23 @@ namespace MSO3
             InputTextBox.Text = fromFileToolStripMenuItem1.Text;
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void x3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool[,] grid = GridBuilder.GetGridFromTxt("/Users/Matse/Desktop/TestGrid.txt");
-
-            if (grid.Length > 0)
-                GridBuilder.DrawGrid(grid, e);
-            else
-                throw new NotImplementedException(); // MAAAAAAAAAAAAAAAAAAAAAAAAAATS
+            Program.LoadGrid(ExampleElements.threeBythree, programViewPanel);
         }
+
+        private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.LoadGrid(ExampleElements.fiveByfive, programViewPanel);
+        }
+
+        private void programViewPanel_Paint(object sender, PaintEventArgs e)
+        {
+            bool[,]? grid = Program.currentGrid;
+
+            if (grid?.Length > 0)
+                GridBuilder.DrawGrid(grid, e);
+        }
+
     }
 }
