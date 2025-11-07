@@ -77,7 +77,9 @@ namespace MSO3
             Tile[,]? grid = Program.currentGrid;
 
             if (grid?.Length > 0)
+            {
                 GridBuilder.DrawGrid(grid, e);
+            }     
         }
     }
 }

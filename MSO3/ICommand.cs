@@ -62,11 +62,21 @@ public class RepeatCommand : ICommand
     {
         for (int j = 0; j < timesExecuted; j++)
         {
+            bool invalidMoveMade = false;
+
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i].Execute(character);
                 logs += commands[i].LogExecute();
+
+                if (character.OffGrid || character.OnBlockedTile) //check invalid position
+                {
+                    invalidMoveMade = true;
+                    break;
+                }
             }
+
+            if (invalidMoveMade) break;
         }
     }
 
@@ -102,7 +112,7 @@ public class RepeatUntilCommand : ICommand
         {
             for (int i = 0; i < commands.Count; i++)
             {
-                if (!condition(character, commands[i])) //check if command is valid
+                if (!condition(character, commands[i]) && !character.OffGrid && !character.OnBlockedTile) //check if command is valid
                 {
                     commands[i].Execute(character);
                     logs += commands[i].LogExecute();
@@ -127,7 +137,7 @@ public class RepeatUntilCommand : ICommand
 
         nextCommand.Execute(dummy);
 
-        return dummy.OnWall;
+        return dummy.OnBlockedTile;
     }
 
     private bool NextCellIsEdge(Character character, ICommand nextCommand)
@@ -136,6 +146,6 @@ public class RepeatUntilCommand : ICommand
 
         nextCommand.Execute(dummy);
 
-        return dummy.OnEdge;
+        return dummy.OffGrid;
     }
 }

@@ -52,6 +52,7 @@ internal class InputReader
                             else Program.WarnUser("turn parameter must be an left or right");
                             break;
                         }
+                    case "": break;
                     default: Program.WarnUser($"invalid command called"); break;
                 }
                 line++;

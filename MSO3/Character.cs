@@ -1,6 +1,6 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Numerics;
+using System.Security.Policy;
 using MSO3;
 
 public class Character
@@ -11,12 +11,12 @@ public class Character
     public Direction Direction => direction;
     public Tile[,]? grid;
 
-    public bool OnWall => grid != null && grid[position.X, position.Y] == Tile.Blocked;
-    public bool OnEdge =>
-    grid != null &&
-    position.X >= 0 && position.Y >= 0 &&
-    position.X < grid.GetLength(0) &&
-    position.Y < grid.GetLength(1);
+    public bool OnBlockedTile => grid == null || grid[position.X, position.Y] == Tile.Blocked;
+    public bool OffGrid =>
+    grid == null ||
+    position.X < 0 || position.Y < 0 ||
+    position.X >= grid.GetLength(0) ||
+    position.Y >= grid.GetLength(1);
 
     public Character(Character other)
     {
@@ -31,9 +31,9 @@ public class Character
     {
         switch (direction)
         {
-            case Direction.North: position.Y += distance; break;
+            case Direction.North: position.Y -= distance; break;
             case Direction.East: position.X += distance; break;
-            case Direction.South: position.Y -= distance; break;
+            case Direction.South: position.Y += distance; break;
             case Direction.West: position.X -= distance; break;
         }
     }
@@ -46,6 +46,17 @@ public class Character
             case "left": this.direction = (Direction)(((int)this.direction + 3) % 4); break;
             default: break;
         }
+    }
+
+    public void Reset()
+    {
+        direction = Direction.South;
+        position = new Point(0, 0);
+    }
+    public void SetOrientation(Direction direction, Point position)
+    {
+        this.direction = direction;
+        this.position = position;
     }
 }
 
