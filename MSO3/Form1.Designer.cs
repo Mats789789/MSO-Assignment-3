@@ -38,6 +38,8 @@
             loadGridToolStripMenuItem = new ToolStripMenuItem();
             x3ToolStripMenuItem = new ToolStripMenuItem();
             x5ToolStripMenuItem = new ToolStripMenuItem();
+            x10ToolStripMenuItem = new ToolStripMenuItem();
+            x10ToolStripMenuItem1 = new ToolStripMenuItem();
             fromFileToolStripMenuItemGrid = new ToolStripMenuItem();
             filePathGridInput = new ToolStripTextBox();
             inputTextBox = new TextBox();
@@ -102,7 +104,7 @@
             // 
             // loadGridToolStripMenuItem
             // 
-            loadGridToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { x3ToolStripMenuItem, x5ToolStripMenuItem, fromFileToolStripMenuItemGrid });
+            loadGridToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { x3ToolStripMenuItem, x5ToolStripMenuItem, x10ToolStripMenuItem1, x10ToolStripMenuItem, fromFileToolStripMenuItemGrid });
             loadGridToolStripMenuItem.Name = "loadGridToolStripMenuItem";
             loadGridToolStripMenuItem.Size = new Size(67, 20);
             loadGridToolStripMenuItem.Text = "LoadGrid";
@@ -110,22 +112,36 @@
             // x3ToolStripMenuItem
             // 
             x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            x3ToolStripMenuItem.Size = new Size(145, 22);
+            x3ToolStripMenuItem.Size = new Size(180, 22);
             x3ToolStripMenuItem.Text = "3x3";
             x3ToolStripMenuItem.Click += x3ToolStripMenuItem_Click;
             // 
             // x5ToolStripMenuItem
             // 
             x5ToolStripMenuItem.Name = "x5ToolStripMenuItem";
-            x5ToolStripMenuItem.Size = new Size(145, 22);
+            x5ToolStripMenuItem.Size = new Size(180, 22);
             x5ToolStripMenuItem.Text = "5x5";
             x5ToolStripMenuItem.Click += x5ToolStripMenuItem_Click;
+            // 
+            // x10ToolStripMenuItem
+            // 
+            x10ToolStripMenuItem.Name = "x10ToolStripMenuItem";
+            x10ToolStripMenuItem.Size = new Size(180, 22);
+            x10ToolStripMenuItem.Text = "10x10Empty";
+            x10ToolStripMenuItem.Click += x10ToolStripMenuItem_Click_1;
+            // 
+            // x10ToolStripMenuItem1
+            // 
+            x10ToolStripMenuItem1.Name = "x10ToolStripMenuItem1";
+            x10ToolStripMenuItem1.Size = new Size(180, 22);
+            x10ToolStripMenuItem1.Text = "10x10";
+            x10ToolStripMenuItem1.Click += x10ToolStripMenuItem_Click;
             // 
             // fromFileToolStripMenuItemGrid
             // 
             fromFileToolStripMenuItemGrid.DropDownItems.AddRange(new ToolStripItem[] { filePathGridInput });
             fromFileToolStripMenuItemGrid.Name = "fromFileToolStripMenuItemGrid";
-            fromFileToolStripMenuItemGrid.Size = new Size(145, 22);
+            fromFileToolStripMenuItemGrid.Size = new Size(180, 22);
             fromFileToolStripMenuItemGrid.Text = "From filepath";
             // 
             // filePathGridInput
@@ -243,5 +259,7 @@
         public TextBox outPutTextBox;
         public TextBox warningTextBox;
         private Button reset_button;
+        private ToolStripMenuItem x10ToolStripMenuItem;
+        private ToolStripMenuItem x10ToolStripMenuItem1;
     }
 }

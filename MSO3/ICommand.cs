@@ -99,8 +99,8 @@ public class RepeatUntilCommand : ICommand
     {
         this.condition = condition switch
         {
-            "nextCellIsWall" => (character, command) => NextCellIsWall(character, command),
-            "nextCellIsEdge" => (character, command) => NextCellIsEdge(character, command),
+            "wall" => NextCellIsWall,
+            "edge" => NextCellIsEdge,
             _ => throw new ArgumentException($"Unknown condition: {condition}")
         };
 
@@ -111,6 +111,8 @@ public class RepeatUntilCommand : ICommand
     {
         bool keepRunning = true;
         string logsLocal = "";
+
+        if (commands.Count == 0) keepRunning = false;
 
         while (keepRunning)
         {
@@ -142,6 +144,10 @@ public class RepeatUntilCommand : ICommand
 
         nextCommand.Execute(dummy);
 
+        if (dummy.OffGrid)
+        {
+            return false;
+        }
         return dummy.OnBlockedTile;
     }
 

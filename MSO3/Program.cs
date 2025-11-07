@@ -42,6 +42,7 @@ namespace MSO3
 
             commands = inputReader.GetCommands(form.inputTextBox.Text);
             string log = "";
+            bool validTile = true;
 
             for (int i = 0; i < commands.Count; i++)
             {
@@ -51,6 +52,7 @@ namespace MSO3
                 if (Character.OffGrid || Character.OnBlockedTile) // check if invalid move was made
                 {
                     WarnUser("character went to invalid square");
+                    validTile = false;
                     break;
                 }
             }
@@ -62,6 +64,11 @@ namespace MSO3
 
             //Draw character at termination
             form.programViewPanel.Refresh();
+
+            if (validTile && Character.OnEndStateTile)
+            {
+                form.warningTextBox.Text = "You won! The character ended on the right tile.";
+            }
         }
 
         private string GetMetrics(string inputText, string log)

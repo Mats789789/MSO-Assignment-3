@@ -11,7 +11,8 @@ public class Character
     public Direction Direction => direction;
     public Tile[,]? grid;
 
-    public bool OnBlockedTile => grid == null || grid[position.X, position.Y] == Tile.Blocked;
+    public bool OnBlockedTile => grid == null || grid[position.Y, position.X] == Tile.Blocked;
+    public bool OnEndStateTile => grid != null && grid[position.Y, position.X] == Tile.EndState;
     public bool OffGrid =>
     grid == null ||
     position.X < 0 || position.Y < 0 ||
@@ -51,7 +52,7 @@ public class Character
 
     public void Reset()
     {
-        this.direction = Direction.North;
+        this.direction = Direction.East;
         this.position = new Point(0, 0);
     }
 }

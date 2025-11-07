@@ -24,7 +24,24 @@ internal class InputReader
         {
             string raw = lines[line].Trim();
 
-            if (raw.StartsWith("Repeat"))
+            if (raw.StartsWith("RepeatUntil"))
+            {
+                string condition = raw.Split(' ')[1];   //parse condition
+
+                line++;
+                List<string> nested = new List<string>();
+
+                while (line < lines.Count && lines[line].StartsWith("    "))  //collect indented lines
+                {
+                    nested.Add(lines[line].Substring(4));
+                    line++;
+                }
+
+                //recursively parse nested commands
+                List<ICommand> nestedCommands = ParseCommands(nested);
+                commands.Add(new RepeatUntilCommand(condition, nestedCommands));
+            }
+            else if (raw.StartsWith("Repeat"))
             { 
                 int times = int.Parse(raw.Split(' ')[1]);   //parse times
 

@@ -49,7 +49,7 @@ namespace MSO3
 
         private void expertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            inputTextBox.Text = expertToolStripMenuItem.Text;
+            inputTextBox.Text = ExampleElements.expertProgram;
         }
 
         private void filePathProgramInputBox_KeyDown(object sender, KeyEventArgs e)
@@ -73,6 +73,15 @@ namespace MSO3
         private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             program.LoadGrid(ExampleElements.fiveByfive, programViewPanel);
+        }
+        private void x10ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            program.LoadGrid(ExampleElements.tenByTenEmpty, programViewPanel);
+        }
+
+        private void x10ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            program.LoadGrid(ExampleElements.tenByTen, programViewPanel);
         }
 
         private void filePathGridInputBox_KeyDown(object sender, KeyEventArgs e)
