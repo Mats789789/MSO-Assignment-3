@@ -75,24 +75,38 @@ public class RepeatUntilCommand : ICommand
 
     public void Execute(Character character)
     {
-        bool cond = true;
+        bool keepRunning = true;
 
-        while (cond)
+        while (keepRunning)
         {
             for (int i = 0; i < commands.Count; i++)
             {
-                commands[i].Execute(character);
+                if (!condition(character, commands[i])) //check if command is valid
+                    commands[i].Execute(character);
+                else
+                {
+                    keepRunning = false;
+                    break;
+                }
             }
         }
     }
 
     private bool NextCellIsWall(Character character, ICommand nextCommand)
     {
-        return false;
+        Character dummy = new Character(character);
+
+        nextCommand.Execute(dummy);
+
+        return dummy.OnWall;
     }
 
     private bool NextCellIsEdge(Character character, ICommand nextCommand)
     {
-        return false;
+        Character dummy = new Character(character);
+
+        nextCommand.Execute(dummy);
+
+        return dummy.OnEdge;
     }
 }

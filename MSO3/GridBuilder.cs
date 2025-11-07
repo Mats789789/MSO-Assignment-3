@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms;
 
 namespace MSO3
 {
     internal class GridBuilder
     {
-        public static bool[,] GetGridFromTxt(string path)
+        public static Tile[,] GetGridFromTxt(string path)
         {
             List<string> lines = [];
             if (File.Exists(path))
@@ -15,7 +16,7 @@ namespace MSO3
             return BuildGrid(lines);
         }
 
-        public static bool[,] BuildGrid(List<string> lines)
+        public static Tile[,] BuildGrid(List<string> lines)
         {
             int height = lines.Count;
             int width;
@@ -25,7 +26,7 @@ namespace MSO3
             else 
                 width = 0;
 
-            bool[,] grid = new bool[height, width];
+            Tile[,] grid = new Tile[height, width];
 
             for (int i = 0; i < height; i++)
             {
@@ -37,8 +38,9 @@ namespace MSO3
 
                     grid[i, j] = c switch
                     {
-                        'x' => false,
-                        'o' => true,
+                        'o' => Tile.Open,
+                        '+' => Tile.Blocked,
+                        'x' => Tile.EndState,
                         _ => throw new NotImplementedException()
                     };
                 }
@@ -47,7 +49,7 @@ namespace MSO3
             return grid;
         }
 
-        public static void DrawGrid(bool[,] grid, PaintEventArgs e)
+        public static void DrawGrid(Tile[,] grid, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
@@ -65,10 +67,14 @@ namespace MSO3
                     int x = j * cellSize + offsetX;
                     int y = i * cellSize + offsetY;
                     g.DrawRectangle(pen, new Rectangle(x, y, cellSize, cellSize));
-                    
-                    if (!grid[i, j])
+
+                    if (grid[i, j] == Tile.Blocked)
                     {
                         g.FillRectangle(Brushes.Black, x, y, cellSize, cellSize);
+                    }
+                    else if (grid[i, j] == Tile.EndState)
+                    {
+                        g.FillRectangle(Brushes.Green, x, y, cellSize, cellSize);
                     }
                 }
             }
