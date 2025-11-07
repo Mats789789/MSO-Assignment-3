@@ -44,6 +44,7 @@
             RunButton = new Button();
             programViewPanel = new Panel();
             OutPutTextBox = new TextBox();
+            WarningBox = new TextBox();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -136,7 +137,7 @@
             InputTextBox.Location = new System.Drawing.Point(12, 89);
             InputTextBox.Multiline = true;
             InputTextBox.Name = "InputTextBox";
-            InputTextBox.Size = new Size(419, 580);
+            InputTextBox.Size = new Size(419, 551);
             InputTextBox.TabIndex = 1;
             InputTextBox.TextChanged += inputTextBox_TextChanged;
             // 
@@ -167,11 +168,19 @@
             OutPutTextBox.Size = new Size(672, 152);
             OutPutTextBox.TabIndex = 4;
             // 
+            // WarningBox
+            // 
+            WarningBox.Location = new System.Drawing.Point(12, 646);
+            WarningBox.Name = "WarningBox";
+            WarningBox.Size = new Size(419, 23);
+            WarningBox.TabIndex = 5;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 681);
+            Controls.Add(WarningBox);
             Controls.Add(OutPutTextBox);
             Controls.Add(programViewPanel);
             Controls.Add(RunButton);
@@ -206,5 +215,6 @@
 
         public TextBox InputTextBox;
         public TextBox OutPutTextBox;
+        public TextBox WarningBox;
     }
 }

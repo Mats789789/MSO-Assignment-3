@@ -1,20 +1,28 @@
-﻿public interface ICommand
+﻿using MSO3;
+
+public interface ICommand
 {
     void Execute(Character character);
+    string LogExecute();
 }
 
 public class MoveCommand : ICommand
 {
     int distance;
 
-    public MoveCommand(string distance)
+    public MoveCommand(int distance)
     {
-        this.distance = int.Parse(distance);
+        this.distance = distance;
     }
 
     public void Execute(Character character)
     {
         character.Move(distance);
+    }
+
+    public string LogExecute()
+    {
+        return $"Move {distance}, ";
     }
 }
 
@@ -31,12 +39,18 @@ public class TurnCommand : ICommand
     {
         character.Turn(direction);
     }
+
+    public string LogExecute()
+    {
+        return $"Turn {direction}, ";
+    }
 }
 
 public class RepeatCommand : ICommand
 {
     List<ICommand> commands;
     int timesExecuted;
+    string logs = "";
 
     public RepeatCommand(int timesExecuted, List<ICommand> commands)
     {
@@ -51,8 +65,14 @@ public class RepeatCommand : ICommand
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i].Execute(character);
+                logs += commands[i].LogExecute();
             }
         }
+    }
+
+    public string LogExecute()
+    {
+        return logs;
     }
 }
 
@@ -60,6 +80,7 @@ public class RepeatUntilCommand : ICommand
 {
     List<ICommand> commands;
     Func<Character, ICommand, bool> condition;
+    string logs = "";
 
     public RepeatUntilCommand(string condition, List<ICommand> commands)
     {
@@ -82,7 +103,10 @@ public class RepeatUntilCommand : ICommand
             for (int i = 0; i < commands.Count; i++)
             {
                 if (!condition(character, commands[i])) //check if command is valid
+                {
                     commands[i].Execute(character);
+                    logs += commands[i].LogExecute();
+                }
                 else
                 {
                     keepRunning = false;
@@ -90,6 +114,11 @@ public class RepeatUntilCommand : ICommand
                 }
             }
         }
+    }
+
+    public string LogExecute()
+    {
+        return logs;
     }
 
     private bool NextCellIsWall(Character character, ICommand nextCommand)

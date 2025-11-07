@@ -40,10 +40,19 @@ internal class InputReader
 
                 switch (cut[0])
                 {
-                    case "Move": commands.Add(new MoveCommand(cut[1])); break;
-                    case "Turn": commands.Add(new TurnCommand(cut[1])); break;
-
-                    default: Program.WarnUser($"invalid syntax"); break;
+                    case "Move": 
+                        {
+                            if (int.TryParse(cut[1], out int parsed)) commands.Add(new MoveCommand(parsed));
+                            else Program.WarnUser("move parameter must be an integer");
+                            break;
+                        } 
+                    case "Turn":
+                        {
+                            if(cut[1] == "left" || cut[1] == "right") commands.Add(new TurnCommand(cut[1]));
+                            else Program.WarnUser("turn parameter must be an left or right");
+                            break;
+                        }
+                    default: Program.WarnUser($"invalid command called"); break;
                 }
                 line++;
             }

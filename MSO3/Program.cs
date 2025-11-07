@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic.Logging;
+
 namespace MSO3
 {
     internal static class Program
@@ -24,17 +26,20 @@ namespace MSO3
             }
 
             commands = InputReader.GetCommands(form.InputTextBox.Text);
+            string log = "";
 
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i].Execute(character);
+                log += commands[i].LogExecute();
             }
 
+            form.OutPutTextBox.Text = log;
             commands.Clear();
         }
         public static void WarnUser(string warning)
         {
-            form.OutPutTextBox.Text = "Warning: " + warning;
+            form.WarningBox.Text = "Warning: " + warning;
         }
 
         public static void LoadGrid(Tile[,] grid, Panel gridPanel)

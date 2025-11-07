@@ -1,6 +1,7 @@
 ﻿
 using System.Diagnostics;
 using System.Numerics;
+using MSO3;
 
 public class Character
 {
@@ -43,7 +44,7 @@ public class Character
         {
             case "right": this.direction = (Direction)(((int)this.direction + 1) % 4); break;
             case "left": this.direction = (Direction)(((int)this.direction + 3) % 4); break;
-            default: throw new ArgumentException();
+            default: break;
         }
     }
 }

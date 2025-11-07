@@ -7,7 +7,7 @@ namespace MSO3
     {
         //Example programs
         public const string basicProgram =
-            "Move 1\r\nTurn right\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn right\r\nMove 1";
+            "Move 1\r\nTurn right\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn right";
         public const string advancedProgram =
             "Repeat 4 times\r\n    Move 1\r\n    Turn right";
         public const string expertProgram =
