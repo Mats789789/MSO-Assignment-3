@@ -50,6 +50,7 @@ public class RepeatCommand : ICommand
 {
     List<ICommand> commands;
     int timesExecuted;
+    string logs;
 
     public RepeatCommand(int timesExecuted, List<ICommand> commands)
     {
@@ -59,25 +60,21 @@ public class RepeatCommand : ICommand
 
     public void Execute(Character character)
     {
+        string logsLocal = "";
+
         for (int j = 0; j < timesExecuted; j++)
         {
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i].Execute(character);
+                logsLocal += commands[i].LogExecute();
             }
         }
+        logs = logsLocal;
     }
 
     public string LogExecute()
     {
-        string logs = "";
-        for (int j = 0; j < timesExecuted; j++)
-        {
-            for (int i = 0; i < commands.Count; i++)
-            {
-                logs += commands[i].LogExecute();
-            }
-        }
         return logs;
     }
 }

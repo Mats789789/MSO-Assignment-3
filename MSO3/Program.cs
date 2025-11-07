@@ -1,49 +1,61 @@
-using Microsoft.VisualBasic.Logging;
+using MSO3;
+
+public interface IProgramController
+{
+    void LoadGrid(Tile[,] grid, Panel gridPanel);
+    void RunProgram(bool printMetrics);
+    void WarnUser(string message);
+    void Reset(Panel gridPanel);
+    Character Character { get; set; }
+    GridBuilder GridBuilder { get; set; }
+}
 
 namespace MSO3
 {
-    internal static class Program
+    internal class Program : IProgramController
     {
-        static Form1 form;
-        public static Character character = new Character();
-        static List<ICommand> commands = new List<ICommand>();
-        public static Tile[,]? currentGrid;
+        public Character Character { get; set; }
+        public GridBuilder GridBuilder { get; set; }
+        private Form1 form;
+        private InputReader inputReader;
 
-        [STAThread]
-        static void Main()
+        public Program(Character character)
         {
-            ApplicationConfiguration.Initialize();
-            form = new Form1();
-            Application.Run(form);
+            Character = character;
+            GridBuilder = new GridBuilder(this);
+            inputReader = new InputReader(this);
         }
 
-        public static void RunCurrentProgram(bool printMetrics)
+        static List<ICommand> commands = new List<ICommand>();
+        public static Tile[,]? programGrid;
+
+        public void RunProgram(bool printMetrics)
         {
-            if (currentGrid == null)
+            if (programGrid == null)
             {
                 WarnUser("cannot run program without valid grid");
                 return;
             }
 
-            commands = InputReader.GetCommands(form.InputTextBox.Text);
+            commands = inputReader.GetCommands(form.inputTextBox.Text);
             string log = "";
 
             for (int i = 0; i < commands.Count; i++)
             {
-                commands[i].Execute(character);
+                commands[i].Execute(Character);
                 log += commands[i].LogExecute();
             }
 
-            if (printMetrics) log += "\r\n\r\n" + GetProgramMetrics(form.InputTextBox.Text, log);
+            if (printMetrics) log += "\r\n\r\n" + GetMetrics(form.inputTextBox.Text, log);
 
-            form.OutPutTextBox.Text = log;
+            form.outPutTextBox.Text = log;
             commands.Clear();
 
             //Draw character at termination
             form.programViewPanel.Refresh();
         }
 
-        private static string GetProgramMetrics(string inputText, string log)
+        private string GetMetrics(string inputText, string log)
         {
             var lines = InputReader.GetLinesTxt(inputText);
             
@@ -55,17 +67,30 @@ namespace MSO3
                 $"NumberOfCommands: {numberOfCommands}\r\nMaxNesting: {maxNesting}\r\nNumberOfRepeats: {numberOfRepeats}";
         }
         
-        public static void WarnUser(string warning)
+        public void WarnUser(string warning)
         {
-            form.WarningBox.Text = "Warning: " + warning;
+            form.warningTextBox.Text = "Warning: " + warning;
         }
 
-        public static void LoadGrid(Tile[,] grid, Panel gridPanel)
+        public void LoadGrid(Tile[,] grid, Panel gridPanel)
         {
-            character.Reset();
-            currentGrid = grid;
-            character.grid = grid; // set characters grid to the current grid
+            Character.Reset();
+            programGrid = grid;
+            Character.grid = grid; // set characters grid to the current grid
             gridPanel.Refresh();
+        }
+
+        public void Reset(Panel gridPanel)
+        {
+            Character.Reset();
+            gridPanel.Refresh();
+            form.outPutTextBox.Text = "";
+            form.warningTextBox.Text = "";
+        }
+
+        public void AttachUI(Form1 form)
+        {
+            this.form = form;
         }
     }
 }
