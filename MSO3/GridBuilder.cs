@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 namespace MSO3
 {
@@ -7,12 +8,16 @@ namespace MSO3
     {
         public static bool[,] GetGridFromTxt(string path)
         {
-            List<string> lines = [];
             if (File.Exists(path))
             {
-                lines = File.ReadAllLines(path).ToList();
+                List<string> lines = File.ReadAllLines(path).ToList();
+                return BuildGrid(lines);
             }
-            return BuildGrid(lines);
+            else
+            {
+                Program.WarnUser("file path could not be found");
+                return Program.currentGrid;
+            }
         }
 
         public static bool[,] BuildGrid(List<string> lines)

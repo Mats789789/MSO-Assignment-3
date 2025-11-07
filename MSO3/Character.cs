@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics;
 using System.Numerics;
 
 public class Character

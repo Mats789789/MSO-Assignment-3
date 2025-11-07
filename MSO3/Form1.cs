@@ -31,7 +31,7 @@ namespace MSO3
 
         private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputTextBox.Text = advancedToolStripMenuItem.Text;
+            InputTextBox.Text = ExampleElements.advancedProgram;
         }
 
         private void expertToolStripMenuItem_Click(object sender, EventArgs e)
@@ -39,9 +39,17 @@ namespace MSO3
             InputTextBox.Text = expertToolStripMenuItem.Text;
         }
 
-        private void fromFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void filePathProgramInputBox_KeyDown(object sender, KeyEventArgs e)
         {
-            InputTextBox.Text = fromFileToolStripMenuItem1.Text;
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                string filePath = ((ToolStripTextBox)sender).Text;
+                if (File.Exists(filePath))
+                {
+                    InputTextBox.Text = File.ReadAllText(filePath);
+                }
+            }
         }
 
         private void x3ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -54,6 +62,16 @@ namespace MSO3
             Program.LoadGrid(ExampleElements.fiveByfive, programViewPanel);
         }
 
+        private void filePathGridInputBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                string filePath = ((ToolStripTextBox)sender).Text;
+                Program.LoadGrid(GridBuilder.GetGridFromTxt(filePath), programViewPanel);
+            }
+        }
+
         private void programViewPanel_Paint(object sender, PaintEventArgs e)
         {
             bool[,]? grid = Program.currentGrid;
@@ -61,6 +79,5 @@ namespace MSO3
             if (grid?.Length > 0)
                 GridBuilder.DrawGrid(grid, e);
         }
-
     }
 }
