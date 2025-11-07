@@ -5,7 +5,7 @@ namespace MSO3
     internal static class Program
     {
         static Form1 form;
-        static Character character = new Character();
+        public static Character character = new Character();
         static List<ICommand> commands = new List<ICommand>();
         public static Tile[,]? currentGrid;
 
@@ -17,7 +17,7 @@ namespace MSO3
             Application.Run(form);
         }
 
-        public static void RunCurrentProgram()
+        public static void RunCurrentProgram(bool printMetrics)
         {
             character.Reset(); //
             form.WarningBox.Text = "";
@@ -43,9 +43,27 @@ namespace MSO3
                 }
             }
 
+            if (printMetrics) log += "\r\n\r\n" + GetProgramMetrics(form.InputTextBox.Text, log);
+
             form.OutPutTextBox.Text = log;
             commands.Clear();
+
+            //Draw character at termination
+            form.programViewPanel.Refresh();
         }
+
+        private static string GetProgramMetrics(string inputText, string log)
+        {
+            var lines = InputReader.GetLinesTxt(inputText);
+            
+            int numberOfCommands = log.Split(',').Count() - 1;
+            int maxNesting = Metrics.MaxNesting(lines);
+            int numberOfRepeats = Metrics.NumberOfRepeats(lines);
+
+            return 
+                $"NumberOfCommands: {numberOfCommands}\r\nMaxNesting: {maxNesting}\r\nNumberOfRepeats: {numberOfRepeats}";
+        }
+        
         public static void WarnUser(string warning)
         {
             form.WarningBox.Text = "Warning: " + warning;
@@ -53,6 +71,7 @@ namespace MSO3
 
         public static void LoadGrid(Tile[,] grid, Panel gridPanel)
         {
+            character.Reset();
             currentGrid = grid;
             character.grid = grid; // set characters grid to the current grid
             gridPanel.Refresh();

@@ -50,7 +50,6 @@ public class RepeatCommand : ICommand
 {
     List<ICommand> commands;
     int timesExecuted;
-    string logs = "";
 
     public RepeatCommand(int timesExecuted, List<ICommand> commands)
     {

@@ -3,7 +3,7 @@ using MSO3;
 
 internal class InputReader
 {
-    private static List<string> GetLinesTxt(string input)
+    public static List<string> GetLinesTxt(string input)
     {
         return input.Split(new[] {"\n", "\r\n", "\r"}, StringSplitOptions.None).ToList();
     }

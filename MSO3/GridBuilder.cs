@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Windows.Forms;
-using static System.Windows.Forms.LinkLabel;
-
+﻿
 namespace MSO3
 {
     internal class GridBuilder
@@ -64,26 +60,26 @@ namespace MSO3
             int offsetX = (e.ClipRectangle.Width - width * cellSize) / 2;
             int offsetY = (e.ClipRectangle.Height - height * cellSize) / 2;
 
-            Pen pen = new Pen(Color.Black);
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++) 
-                {
-                    int x = j * cellSize + offsetX;
-                    int y = i * cellSize + offsetY;
-                    g.DrawRectangle(pen, new Rectangle(x, y, cellSize, cellSize));
+            Point characterPos = Program.character.Position;
 
-                    if (grid[i, j] == Tile.Blocked)
+            for (int row = 0; row < height; row++)
+            {
+                for (int column = 0; column < width; column++)
+                {
+                    int x = column * cellSize + offsetX;
+                    int y = row * cellSize + offsetY;
+
+                    if (characterPos.X == column && characterPos.Y == row)
                     {
-                        g.FillRectangle(Brushes.Black, x, y, cellSize, cellSize);
+                        Image image = Image.FromFile(Path.Combine(Application.StartupPath, "Assets", "CharacterSprite.png"));
+                        TileRenderer.DrawImageTile(g, image, x, y, cellSize);
+                        continue;
                     }
-                    else if (grid[i, j] == Tile.EndState)
-                    {
-                        g.FillRectangle(Brushes.Green, x, y, cellSize, cellSize);
-                    }
+
+                    Tile current = grid[row, column];
+                    TileRenderer.DrawTile(g, current, x, y, cellSize);
                 }
             }
-            pen.Dispose();
         }
     }
 }

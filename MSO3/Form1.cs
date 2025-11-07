@@ -21,7 +21,12 @@ namespace MSO3
 
         private void runProgramButton_Click(object sender, EventArgs e)
         {
-            Program.RunCurrentProgram();
+            Program.RunCurrentProgram(false);
+        }
+
+        private void metrics_button_Click(object sender, EventArgs e)
+        {
+            Program.RunCurrentProgram(true);
         }
 
         private void basicToolStripMenuItem_Click(object sender, EventArgs e)

@@ -50,13 +50,8 @@ public class Character
 
     public void Reset()
     {
-        direction = Direction.South;
-        position = new Point(0, 0);
-    }
-    public void SetOrientation(Direction direction, Point position)
-    {
-        this.direction = direction;
-        this.position = position;
+        this.direction = Direction.North;
+        this.position = new Point(0, 0);
     }
 }
 
