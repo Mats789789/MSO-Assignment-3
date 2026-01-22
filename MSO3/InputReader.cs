@@ -1,7 +1,8 @@
 ﻿
+using System.Diagnostics;
 using MSO3;
 
-internal class InputReader
+public class InputReader
 {
     IProgramController program;
 
@@ -67,17 +68,17 @@ internal class InputReader
                     case "Move": 
                         {
                             if (int.TryParse(cut[1], out int parsed)) commands.Add(new MoveCommand(parsed));
-                            else program.WarnUser("move parameter must be an integer");
+                            else throw new InvalidCommandException(line);
                             break;
                         } 
                     case "Turn":
                         {
                             if(cut[1] == "left" || cut[1] == "right") commands.Add(new TurnCommand(cut[1]));
-                            else program.WarnUser("turn parameter must be an left or right");
+                            else throw new InvalidCommandException(line);
                             break;
                         }
                     case "": break;
-                    default: program.WarnUser($"invalid command called"); break;
+                    default: throw new InvalidCommandException(line);
                 }
                 line++;
             }

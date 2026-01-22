@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace MSO3
 {
     internal static class ApplicationRoot

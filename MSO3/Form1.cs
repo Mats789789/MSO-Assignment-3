@@ -5,11 +5,13 @@ namespace MSO3
     public partial class Form1 : Form
     {
         private readonly IProgramController program;
+        InputReader inputReader;
 
         public Form1(IProgramController programController)
         {
             InitializeComponent();
             this.program = programController;
+            inputReader = new InputReader(program);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -24,12 +26,32 @@ namespace MSO3
 
         private void runProgramButton_Click(object sender, EventArgs e)
         {
-            program.RunProgram(false);
+            var commands = new List<ICommand>();
+            try
+            {
+                commands = inputReader.GetCommands(program.Form.inputTextBox.Text);
+            }
+            catch (InvalidCommandException ex)
+            {
+                program.WarnUser(ex.Message);
+                return;
+            }
+            program.TryRunProgram(commands, false);
         }
 
         private void metrics_button_Click(object sender, EventArgs e)
         {
-            program.RunProgram(true);
+            var commands = new List<ICommand>();
+            try
+            {
+                commands = inputReader.GetCommands(program.Form.inputTextBox.Text);
+            }
+            catch (InvalidCommandException ex)
+            {
+                program.WarnUser(ex.Message);
+                return;
+            }
+            program.TryRunProgram(commands, true);
         }
 
         private void reset_button_Click(object sender, EventArgs e)
@@ -56,11 +78,19 @@ namespace MSO3
         {
             if (e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true;
-                string filePath = ((ToolStripTextBox)sender).Text;
-                if (File.Exists(filePath))
+                try
                 {
-                    inputTextBox.Text = File.ReadAllText(filePath);
+                    e.SuppressKeyPress = true;
+                    string filePath = ((ToolStripTextBox)sender).Text;
+                    if (File.Exists(filePath))
+                    {
+                        inputTextBox.Text = File.ReadAllText(filePath);
+                    }
+                    else throw new FilePathNotFoundException();
+                }
+                catch(FilePathNotFoundException ex)
+                {
+                    program.WarnUser(ex.Message);
                 }
             }
         }
@@ -90,7 +120,14 @@ namespace MSO3
             {
                 e.SuppressKeyPress = true;
                 string filePath = ((ToolStripTextBox)sender).Text;
-                program.LoadGrid(program.GridBuilder.GetGridFromTxt(filePath), programViewPanel);
+                try
+                {
+                    program.LoadGrid(program.GridBuilder.GetGridFromTxt(filePath), programViewPanel);
+                }
+                catch (FilePathNotFoundException ex)
+                {
+                    program.WarnUser(ex.Message);
+                }
             }
         }
 

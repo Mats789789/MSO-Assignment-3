@@ -1,22 +1,25 @@
+using System.Diagnostics;
 using MSO3;
 
 public interface IProgramController
 {
     void LoadGrid(Tile[,] grid, Panel gridPanel);
-    void RunProgram(bool printMetrics);
+    void RunProgram(List<ICommand> commands, bool printMetrics);
+    void TryRunProgram(List<ICommand> commands, bool printMetrics);
     void WarnUser(string message);
     void Reset(Panel gridPanel);
+    Form1 Form { get; set; }
     Character Character { get; set; }
     GridBuilder GridBuilder { get; set; }
 }
 
 namespace MSO3
 {
-    internal class Program : IProgramController
+    public class Program : IProgramController
     {
         public Character Character { get; set; }
         public GridBuilder GridBuilder { get; set; }
-        private Form1 form;
+        public Form1 Form { get; set; }
         private InputReader inputReader;
 
         public Program(Character character)
@@ -26,48 +29,62 @@ namespace MSO3
             inputReader = new InputReader(this);
         }
 
-        static List<ICommand> commands = new List<ICommand>();
         public static Tile[,]? programGrid;
 
-        public void RunProgram(bool printMetrics)
+        public void RunProgram(List<ICommand> commands, bool printMetrics)
         {
-            Character.Reset(); //
-            form.warningTextBox.Text = "";
+            //Clear warnings and reset character
+            Character.Reset();
+            Form.warningTextBox.Text = "";
 
-            if (Character.grid == null)
-            {
-                WarnUser("cannot run program without valid grid");
-                return;
-            }
+            if (Character.grid == null) throw new InvalidGridException();
 
-            commands = inputReader.GetCommands(form.inputTextBox.Text);
             string log = "";
             bool validTile = true;
 
-            for (int i = 0; i < commands.Count; i++)
+            try
             {
-                commands[i].Execute(Character);
-                log += commands[i].LogExecute();
-
-                if (Character.OffGrid || Character.OnBlockedTile) // check if invalid move was made
+                for (int i = 0; i < commands.Count; i++)
                 {
-                    WarnUser("character went to invalid square");
-                    validTile = false;
-                    break;
+                    commands[i].Execute(Character);
+                    log += commands[i].LogExecute();
+
+                    if (Character.OffGrid || Character.OnBlockedTile) // check if invalid move was made
+                    {
+                        // Warn user and stop moving the character
+                        throw new InvalidMoveException();
+                    }
                 }
             }
-
-            if (printMetrics) log += "\r\n\r\n" + GetMetrics(form.inputTextBox.Text, log);
-
-            form.outPutTextBox.Text = log;
+            catch (InvalidMoveException e)
+            {
+                WarnUser(e.Message);
+            }
+            
+            //Add metrics to the log textbox
+            if (printMetrics) log += "\r\n\r\n" + GetMetrics(Form.inputTextBox.Text, log);
+            Form.outPutTextBox.Text = log;
+            
             commands.Clear();
 
-            //Draw character at termination
-            form.programViewPanel.Refresh();
+            //Redraw character before termination
+            Form.programViewPanel.Refresh();
 
             if (validTile && Character.OnEndStateTile)
             {
-                form.warningTextBox.Text = "You won! The character ended on the right tile.";
+                Form.warningTextBox.Text = "You won! The character ended on the right tile.";
+            }
+        }
+
+        public void TryRunProgram(List<ICommand> commands, bool printMetrics)
+        {
+            try
+            {
+                RunProgram(commands, printMetrics);
+            }
+            catch (InvalidGridException e)
+            {
+                WarnUser(e.Message);
             }
         }
 
@@ -85,7 +102,7 @@ namespace MSO3
         
         public void WarnUser(string warning)
         {
-            form.warningTextBox.Text = "Warning: " + warning;
+            Form.warningTextBox.Text = "Warning: " + warning;
         }
 
         public void LoadGrid(Tile[,] grid, Panel gridPanel)
@@ -100,13 +117,13 @@ namespace MSO3
         {
             Character.Reset();
             gridPanel.Refresh();
-            form.outPutTextBox.Text = "";
-            form.warningTextBox.Text = "";
+            Form.outPutTextBox.Text = "";
+            Form.warningTextBox.Text = "";
         }
 
         public void AttachUI(Form1 form)
         {
-            this.form = form;
+            this.Form = form;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿internal static class Metrics
+﻿public static class Metrics
 {
     public static int NumberOfCommands(List<string> rawCommands)
     {

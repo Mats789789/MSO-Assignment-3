@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MSO3
 {
-    internal static class ExampleElements
+    public static class ExampleElements
     {
         //Example programs
         public const string basicProgram =

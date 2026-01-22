@@ -5,7 +5,7 @@ namespace MSO3
     {
         public static void DrawTile(Graphics g, Tile tile, int x, int y, int size)
         {
-            //Fill basic tiles
+            //Fill basic background tiles
             switch (tile)
             {
                 case Tile.Blocked: g.FillRectangle(Brushes.Black, x, y, size, size); break;
@@ -19,8 +19,8 @@ namespace MSO3
 
         public static void DrawImageTile(Graphics g, Image image, int x, int y, int size)
         {
-            g.DrawImage(image, new Rectangle(x, y, size, size));
-            g.DrawRectangle(Pens.Black, x, y, size, size);
+            g.DrawImage(image, new Rectangle(x, y, size, size)); //Draw image of character
+            g.DrawRectangle(Pens.Black, x, y, size, size); //Draw rectangle around the character
         }
     }
 }

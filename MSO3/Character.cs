@@ -26,10 +26,15 @@ public class Character
         this.grid = other.grid;
     }
 
-    public Character() { }
+    public Character()
+    {
+        this.direction = Direction.East;
+        this.position = new Point(0, 0);
+    }
 
     public void Move(int distance)
     {
+        //Move character in its direction
         switch (direction)
         {
             case Direction.North: position.Y -= distance; break;

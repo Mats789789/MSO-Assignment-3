@@ -19,8 +19,7 @@ namespace MSO3
             }
             else
             {
-                program.WarnUser("file path could not be found");
-                return Program.programGrid;
+                throw new FilePathNotFoundException();
             }
         }
 
@@ -67,6 +66,7 @@ namespace MSO3
             int offsetX = (e.ClipRectangle.Width - width * cellSize) / 2;
             int offsetY = (e.ClipRectangle.Height - height * cellSize) / 2;
 
+            //Draw tile for every tile in grid
             for (int row = 0; row < height; row++)
             {
                 for (int column = 0; column < width; column++)
@@ -74,15 +74,15 @@ namespace MSO3
                     int x = column * cellSize + offsetX;
                     int y = row * cellSize + offsetY;
 
+                    Tile current = grid[row, column];
+                    TileRenderer.DrawTile(g, current, x, y, cellSize);
+                    //Draw charcter on players position
                     if (characterPos.X == column && characterPos.Y == row)
                     {
                         Image image = Image.FromFile(Path.Combine(Application.StartupPath, "Assets", "CharacterSprite.png"));
                         TileRenderer.DrawImageTile(g, image, x, y, cellSize);
                         continue;
                     }
-
-                    Tile current = grid[row, column];
-                    TileRenderer.DrawTile(g, current, x, y, cellSize);
                 }
             }
         }
